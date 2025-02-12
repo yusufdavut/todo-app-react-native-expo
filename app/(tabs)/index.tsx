@@ -1,74 +1,67 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import TodoContext from "@/contextApi/Todo.context";
+import { useContext } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 export default function HomeScreen() {
+  const { todos, removeTodo, toggleTodo } = useContext(TodoContext);
+
+  const onRemoveTodo = (id: number) => {
+    removeTodo(id);
+  };
+
+  const onCompleted = (item: any) => {
+    toggleTodo(item.id);
+  };
+
+  const todosData = [
+    ...todos,
+    { id: 1, text: "first todo", completed: true },
+    { id: 2, text: "second todo", completed: false },
+    { id: 3, text: "last todo", completed: true },
+    { id: 4, text: "another todo", completed: false },
+    { id: 5, text: "other todo", completed: true },
+    { id: 11, text: "first todo", completed: true },
+    { id: 21, text: "second todo", completed: false },
+    { id: 31, text: "last todo", completed: true },
+    { id: 14, text: "another todo", completed: false },
+    { id: 51, text: "other todo", completed: true },
+  ];
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View className="flex flex-col h-full px-4 py-6">
+      <View className="flex flex-col gap-1 mb-6">
+        <Text className="text-2xl font-bold">All Todos</Text>
+        <View className="bg-teal-700 h-2 w-1/6"></View>
+      </View>
+      <ScrollView className="flex gap-4">
+        {todosData?.length <= 0 && <Text>Not found todo.</Text>}
+        {todosData?.map((item, index) => (
+          <View
+            key={item.id}
+            className={`${
+              item.completed ? "bg-gray-200" : "bg-white"
+            } flex flex-row items-center justify-between px-2 py-4 border-b border-gray-200`}
+          >
+            <TouchableOpacity onPress={() => onCompleted(item)}>
+              <View className="border border-gray-600 w-6 h-6 flex items-center justify-center">
+                {item.completed ? "✅" : "❌"}
+              </View>
+            </TouchableOpacity>
+            <View className="relative">
+              <View
+                className={`absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gray-500 ${
+                  item.completed ? "w-full" : "w-0"
+                }`}
+              ></View>
+              <Text>{item?.text}</Text>
+            </View>
+            <TouchableOpacity onPress={() => onRemoveTodo(item.id)}>
+              <FontAwesome6 name="trash" size={16} color="red" />
+            </TouchableOpacity>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
