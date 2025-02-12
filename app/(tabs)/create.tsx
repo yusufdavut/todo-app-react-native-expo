@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import TodoContext from "@/contextApi/Todo.context";
+import Toast from "react-native-toast-message";
 
 export default function TabTwoScreen() {
   const [text, onChangeText] = useState("");
@@ -11,6 +12,13 @@ export default function TabTwoScreen() {
     if (text) {
       addTodo(text);
       onChangeText("");
+      Toast.show({
+        type: "success",
+        text1: "Successfuly!",
+        text2: "Your todo added",
+        autoHide: true,
+        visibilityTime: 1000,
+      });
     }
   };
 

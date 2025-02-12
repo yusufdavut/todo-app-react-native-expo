@@ -8,6 +8,7 @@ import "../global.css";
 import { Text, View } from "react-native";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { TodoProvider } from "@/contextApi/Todo.context";
+import Toast from "react-native-toast-message";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -39,6 +40,7 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
+      <Toast />
     </TodoProvider>
   );
 }
