@@ -1,7 +1,15 @@
 import { useContext, useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Pressable,
+  Keyboard,
+} from "react-native";
 import TodoContext from "@/contextApi/Todo.context";
 import Toast from "react-native-toast-message";
+import { StatusBar } from "expo-status-bar";
 
 export default function TabTwoScreen() {
   const [text, onChangeText] = useState("");
@@ -19,6 +27,7 @@ export default function TabTwoScreen() {
         autoHide: true,
         visibilityTime: 1000,
       });
+      Keyboard.dismiss();
     }
   };
 
@@ -36,14 +45,12 @@ export default function TabTwoScreen() {
         className="flex bg-gray-100 border border-teal-900 p-4 outline-none mb-6"
       />
 
-      <View className="bg-teal-700 rounded-md max-w-[100px] mx-auto py-1 px-2">
-        <Button
-          onPress={onCreateTodo}
-          title="Create"
-          color="transparent"
-          accessibilityLabel="todo create button"
-        />
-      </View>
+      <Pressable
+        onPress={onCreateTodo}
+        className="bg-teal-700 rounded-md w-[120px] h-16 flex items-center justify-center mx-auto"
+      >
+        <Text className="text-white py-1 px-2 text-xl">Create</Text>
+      </Pressable>
     </View>
   );
 }

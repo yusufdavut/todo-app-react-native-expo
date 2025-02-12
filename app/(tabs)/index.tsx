@@ -30,19 +30,19 @@ export default function HomeScreen() {
             } flex flex-row items-center justify-between px-2 py-4 border-b border-gray-200`}
           >
             <TouchableOpacity onPress={() => onCompleted(item)}>
-              <View className="border border-gray-600 w-6 h-6 flex items-center justify-center">
-                {item.completed ? "✅" : "❌"}
+              <View className="border border-gray-600 w-11 h-11 flex items-center justify-center">
+                <Text>{item.completed ? "✅" : "❌"}</Text>
               </View>
             </TouchableOpacity>
             <View className="relative">
-              <View
-                className={`absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gray-500 ${
-                  item.completed ? "w-full" : "w-0"
-                }`}
-              ></View>
-              <Text>{item?.text}</Text>
+              <Text className={`${item.completed ? "line-through " : ""}`}>
+                {item?.text}
+              </Text>
             </View>
-            <TouchableOpacity onPress={() => onRemoveTodo(item.id)}>
+            <TouchableOpacity
+              onPress={() => onRemoveTodo(item.id)}
+              className="h-11 w-11 justify-center items-center"
+            >
               <FontAwesome6 name="trash" size={16} color="red" />
             </TouchableOpacity>
           </View>
