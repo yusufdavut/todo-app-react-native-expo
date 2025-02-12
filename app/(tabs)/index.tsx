@@ -14,20 +14,6 @@ export default function HomeScreen() {
     toggleTodo(item.id);
   };
 
-  const todosData = [
-    ...todos,
-    { id: 1, text: "first todo", completed: true },
-    { id: 2, text: "second todo", completed: false },
-    { id: 3, text: "last todo", completed: true },
-    { id: 4, text: "another todo", completed: false },
-    { id: 5, text: "other todo", completed: true },
-    { id: 11, text: "first todo", completed: true },
-    { id: 21, text: "second todo", completed: false },
-    { id: 31, text: "last todo", completed: true },
-    { id: 14, text: "another todo", completed: false },
-    { id: 51, text: "other todo", completed: true },
-  ];
-
   return (
     <View className="flex flex-col h-full px-4 py-6">
       <View className="flex flex-col gap-1 mb-6">
@@ -35,10 +21,10 @@ export default function HomeScreen() {
         <View className="bg-teal-700 h-2 w-1/6"></View>
       </View>
       <ScrollView className="flex gap-4">
-        {todosData?.length <= 0 && <Text>Not found todo.</Text>}
-        {todosData?.map((item, index) => (
+        {todos?.length <= 0 && <Text>Not found todo.</Text>}
+        {todos?.map((item, index) => (
           <View
-            key={item.id}
+            key={index}
             className={`${
               item.completed ? "bg-gray-200" : "bg-white"
             } flex flex-row items-center justify-between px-2 py-4 border-b border-gray-200`}
